@@ -6,6 +6,7 @@ class Ingredient(models.Model):
     """
     Food object definition.
     Values for energy, fat and portion are represented for 100g portion.
+    Fat, proteins and carbohydrates are represented in grams.
     """
     decimal_precision = 2
     name = models.CharField(max_length=50)
@@ -29,19 +30,20 @@ class Activity(models.Model):
     """
     Activity object definition.
     Value for average burned calories is estimated for 1h of activity.
+    Duration represents activity time in minutes.
     """
     name = models.CharField(max_length=30)
     calories_burned = models.PositiveIntegerField()
+    duration = models.PositiveIntegerField()
 
 
 class Training(models.Model):
     """
     Training object definition.
-    Duration represented training time in minutes.
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    duration = models.PositiveIntegerField()
     day = models.DateField()
+    activities = models.ManyToManyField(Activity)
 
 
 class DailySummary(models.Model):
