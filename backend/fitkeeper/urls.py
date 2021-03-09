@@ -19,11 +19,11 @@ from rest_framework import routers
 from fitkeeper.backendapp import views
 
 router = routers.DefaultRouter()
-router.register(r'ingredients', views.IngredientView)
-router.register(r'meals', views.MealView)
-router.register(r'activities', views.ActivityView)
-router.register(r'trainings', views.TrainingView)
-router.register(r'dailysummaries', views.DailySummaryView)
+router.register(r'ingredients', views.IngredientViewSet)
+router.register(r'meals', views.MealViewSet)
+router.register(r'activities', views.ActivityViewSet)
+router.register(r'trainings', views.TrainingViewSet)
+router.register(r'dailysummaries', views.DailySummaryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

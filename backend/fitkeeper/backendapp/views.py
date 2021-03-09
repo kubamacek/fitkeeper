@@ -3,26 +3,26 @@ from .models import Ingredient, Meal, Activity, Training, DailySummary
 from .serializers import IngredientSerializer, MealSerializer, ActivitySerializer, TrainingSerializer, DailySummarySerializer
 
 
-class IngredientView(viewsets.ModelViewSet):
+class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
 
-class MealView(viewsets.ModelViewSet):
+class MealViewSet(viewsets.ModelViewSet):
     queryset = Meal.objects.all()
     serializer_class = MealSerializer
 
 
-class ActivityView(viewsets.ModelViewSet):
+class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
 
 
-class TrainingView(viewsets.ModelViewSet):
+class TrainingViewSet(viewsets.ModelViewSet):
     queryset = Training.objects.all()
     serializer_class = TrainingSerializer
 
 
-class DailySummaryView(viewsets.ModelViewSet):
+class DailySummaryViewSet(viewsets.ModelViewSet):
     queryset = DailySummary.objects.all()
     serializer_class = DailySummarySerializer
