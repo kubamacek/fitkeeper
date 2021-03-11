@@ -8,7 +8,7 @@ from decimal import Decimal
 import json
 
 
-class IngredientViewTest(APITestCase):
+class IngredientViewSetTest(APITestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
         self.user = User.objects.create_superuser(

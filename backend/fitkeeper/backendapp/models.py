@@ -34,7 +34,6 @@ class Activity(models.Model):
     """
     name = models.CharField(max_length=30)
     calories_burned = models.PositiveIntegerField()
-    duration = models.PositiveIntegerField()
 
 
 class Training(models.Model):
@@ -43,7 +42,8 @@ class Training(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     day = models.DateField()
-    activities = models.ManyToManyField(Activity)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    duration = models.PositiveIntegerField()
 
 
 class DailySummary(models.Model):
