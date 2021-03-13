@@ -20,6 +20,7 @@ from fitkeeper.backendapp import views
 
 router = routers.DefaultRouter()
 router.register(r'ingredients', views.IngredientViewSet)
+router.register(r'mealcomponents', views.MealComponentViewSet)
 router.register(r'meals', views.MealViewSet)
 router.register(r'activities', views.ActivityViewSet)
 router.register(r'trainings', views.TrainingViewSet)

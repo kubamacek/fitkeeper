@@ -1,17 +1,48 @@
 from rest_framework import serializers
-from .models import Ingredient, Meal, Activity, Training, DailySummary
+from .models import Ingredient, MealComponent, Meal, Activity, Training, DailySummary
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
+        fields = '__all__'    
+
+
+class MealComponentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MealComponent
         fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super(MealComponentSerializer, self).to_representation(instance)
+        rep['ingredient'] = instance.ingredient.name
+        return rep
 
 
 class MealSerializer(serializers.ModelSerializer):
+    meal_components = MealComponentSerializer(many=True)
+
     class Meta:
         model = Meal
-        fields = '__all__'
+        fields = ['id', 'name', 'day', 'meal_components', 'user']
+
+    def to_representation(self, instance):
+        rep = super(MealSerializer, self).to_representation(instance)
+        rep['user'] = instance.user.username
+        return rep
+
+    def create(self, validated_data):
+        meal_components_data = validated_data.pop('meal_components')
+        name = validated_data.pop('name')
+        day = validated_data.pop('day')
+        user = validated_data.pop('user')
+        meal = Meal.objects.create(name=name, day=day, user=user)
+        for mc in meal_components_data:
+            ingredient = Ingredient.objects.get(id=mc.get('ingredient').id)
+            meal_component = MealComponent.objects.create(weight=mc.get('weight'), ingredient=ingredient)
+            meal.meal_components.add(meal_component)
+        return meal
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -24,6 +55,12 @@ class TrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Training
         fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super(TrainingSerializer, self).to_representation(instance)
+        rep['activity'] = instance.activity.name
+        rep['user'] = instance.user.username
+        return rep
 
 
 class DailySummarySerializer(serializers.ModelSerializer):

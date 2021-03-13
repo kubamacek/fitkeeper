@@ -1,11 +1,16 @@
 from rest_framework import viewsets
-from .models import Ingredient, Meal, Activity, Training, DailySummary
-from .serializers import IngredientSerializer, MealSerializer, ActivitySerializer, TrainingSerializer, DailySummarySerializer
+from .models import Ingredient, MealComponent, Meal, Activity, Training, DailySummary
+from .serializers import IngredientSerializer, MealSerializer, MealComponentSerializer, ActivitySerializer, TrainingSerializer, DailySummarySerializer
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+
+class MealComponentViewSet(viewsets.ModelViewSet):
+    queryset = MealComponent.objects.all()
+    serializer_class = MealComponentSerializer
 
 
 class MealViewSet(viewsets.ModelViewSet):
