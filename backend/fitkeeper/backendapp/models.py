@@ -44,6 +44,13 @@ class Meal(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            pass
+        super(Meal, self).save(*args, **kwargs)
+        dailysummary = DailySummary.objects.get_or_create(day=self.day, user=self.user)[0]
+        dailysummary.meals.add(self)
+
 
 class Activity(models.Model):
     """
@@ -66,6 +73,13 @@ class Training(models.Model):
     day = models.DateField()
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     duration = models.PositiveIntegerField()
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            pass
+        super(Training, self).save(*args, **kwargs)
+        dailysummary = DailySummary.objects.get_or_create(day=self.day, user=self.user)[0]
+        dailysummary.trainings.add(self)
 
 
 class DailySummary(models.Model):

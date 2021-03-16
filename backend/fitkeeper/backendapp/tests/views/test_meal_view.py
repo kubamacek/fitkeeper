@@ -86,7 +86,7 @@ class MealViewSetTest(APITestCase):
         self.assertEqual(meal.day, date(2020, 3, 10))
         self.assertEqual(meal.user, self.user)
 
-    def test_wrong_post_ingredient(self):
+    def test_wrong_post_meal(self):
         data = json.dumps({
             "user": self.user.pk,
             "day": "2020-03-10"})
@@ -94,53 +94,95 @@ class MealViewSetTest(APITestCase):
         client.force_authenticate(user=self.user)
         response = client.post('/api/v1/meals/', data=data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-'''
-    def test_put_ingredient(self):
-        banana = Ingredient.objects.first()
-        pk = banana.pk
-        data = json.dumps({
-            "name": "Banana",
-            "energy": 123,
-            "fat": 0.5,
-            "protein": 17.2,
-            "carbohydrate": 10.0})
-        client = APIClient()
-        client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/ingredients/{}/'.format(pk), data=data, content_type='application/json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        banana = Ingredient.objects.filter(name="Banana").first()
-        self.assertEqual(banana.fat, Decimal('0.5'))
-        self.assertEqual(banana.carbohydrate, Decimal('10.0'))
-        self.assertEqual(banana.energy, 123)
-        self.assertEqual(banana.protein, Decimal('17.2'))
 
-    def test_wrong_put_ingredient(self):
-        banana = Ingredient.objects.first()
-        pk = banana.pk
+    def test_put_meal_empty_components(self):
+        meal = Meal.objects.first()
+        pk = meal.pk
         data = json.dumps({
-            "name": "Banana",
-            "energy": 123,
-            "protein": 17.2,
-            "carbohydrate": 10.0})
+            "name": meal.name,
+            "day": "2020-03-10",
+            "user": meal.user.pk,
+            "meal_components": []})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/ingredients/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/meals/{}/'.format(pk), data=data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        meal = Meal.objects.get(id=pk)
+        self.assertEqual(meal.meal_components.count(), 0)
+
+    def test_put_meal_update_component(self):
+        meal = Meal.objects.first()
+        pk = meal.pk
+        ingredient = meal.meal_components.first().ingredient
+        data = json.dumps({
+            "user": self.user.pk,
+            "day": "2020-03-10",
+            "name": "single banana",
+            "meal_components": [{
+                "weight": 300,
+                "ingredient": ingredient.pk
+            }]
+        })
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+        response = client.put('/api/v1/meals/{}/'.format(pk), data=data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        meal = Meal.objects.get(id=pk)
+        self.assertEqual(meal.meal_components.get(ingredient__id=ingredient.pk).weight, 300)
+
+    def test_put_meal_add_component(self):
+        cottage_cheese = Ingredient.objects.create(name="Cottage cheese",
+                                                   energy=200,
+                                                   fat=10.0,
+                                                   carbohydrate=12.0,
+                                                   protein=14.1)
+        meal = Meal.objects.first()
+        ingredient = meal.meal_components.first().ingredient
+        pk = meal.pk
+        data = json.dumps({
+            "user": self.user.pk,
+            "day": "2020-03-10",
+            "name": "single banana",
+            "meal_components": [{
+                "weight": 120,
+                "ingredient": ingredient.pk
+            }, {
+                "weight": 200,
+                "ingredient": cottage_cheese.pk
+            }]
+        })
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+        response = client.put('/api/v1/meals/{}/'.format(pk), data=data, content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        meal = Meal.objects.get(id=pk)
+        self.assertEqual(meal.meal_components.count(), 2)
+        self.assertEqual(meal.meal_components.get(ingredient=cottage_cheese).weight, 200)
+
+    def test_wrong_put_meal(self):
+        meal = Meal.objects.first()
+        pk = meal.pk
+        data = json.dumps({
+            "user": self.user.pk,
+            "day": "2020-03-10"})
+        client = APIClient()
+        client.force_authenticate(user=self.user)
+        response = client.put('/api/v1/meals/{}/'.format(pk), data=data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_delete_ingredient(self):
-        banana = Ingredient.objects.first()
-        pk = banana.pk
+    def test_delete_meal(self):
+        meal = Meal.objects.first()
+        pk = meal.pk
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.delete('/api/v1/ingredients/{}/'.format(pk))
+        response = client.delete('/api/v1/meals/{}/'.format(pk))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertRaises(Ingredient.DoesNotExist, Ingredient.objects.get, pk=pk)
 
-    def test_wrong_delete_ingredient(self):
+    def test_wrong_delete_meal(self):
         pks = [obj.pk for obj in Ingredient.objects.all()]
         not_existing = max(pks) + 1
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.delete('/api/v1/ingredients/{}/'.format(not_existing))
+        response = client.delete('/api/v1/meals/{}/'.format(not_existing))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-'''

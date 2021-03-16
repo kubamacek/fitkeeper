@@ -7,7 +7,7 @@ import datetime
 class DailySummaryTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(username="John")
-        self.day = datetime.datetime(2021, 3, 8, 9, 0, 0)
+        self.day = datetime.date(2021, 3, 8)
         self.meal_name = "Banana shake"
         self.activity = Activity.objects.create(name="swimming",
                                                       calories_burned=600)
@@ -33,9 +33,7 @@ class DailySummaryTestCase(TestCase):
         self.meal.meal_components.add(self.first_component, self.second_component)
 
     def test_dailysummary(self):
-        daily_summary = DailySummary.objects.create(day=self.day, user=self.user)
-        daily_summary.meals.add(self.meal)
-        daily_summary.trainings.add(self.training)
+        daily_summary = DailySummary.objects.get(day=self.day, user=self.user)
         self.assertEqual(daily_summary.user, self.user)
         self.assertEqual(daily_summary.day, self.day)
         self.assertEqual(daily_summary.meals.first(), self.meal)

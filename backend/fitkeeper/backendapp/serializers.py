@@ -44,6 +44,18 @@ class MealSerializer(serializers.ModelSerializer):
             meal.meal_components.add(meal_component)
         return meal
 
+    def update(self, instance, validated_data):
+        meal_components_data = validated_data.pop('meal_components')
+        instance.name = validated_data.get('name', instance.name)
+        instance.day = validated_data.get('day', instance.day)
+        instance.user = validated_data.get('user', instance.user)
+        instance.meal_components.clear()
+        for mc in meal_components_data:
+            ingredient = Ingredient.objects.get(id=mc.get('ingredient').id)
+            meal_component = MealComponent.objects.get_or_create(ingredient=ingredient, weight=mc.get('weight'))
+            instance.meal_components.add(meal_component[0])
+        return instance
+
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,6 +76,9 @@ class TrainingSerializer(serializers.ModelSerializer):
 
 
 class DailySummarySerializer(serializers.ModelSerializer):
+    trainings = TrainingSerializer(many=True)
+    meals = MealSerializer(many=True)
+
     class Meta:
         model = DailySummary
         fields = '__all__'
