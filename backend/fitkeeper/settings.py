@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'fitkeeper.backendapp',
+    'fitkeeper.account',
     'corsheaders',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,13 @@ STATIC_URL = '/static/'
 # CORS settings
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# REST FRAMEWORK SETTINGS
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
