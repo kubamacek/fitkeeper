@@ -1,0 +1,28 @@
+<mat-nav-list class="sidenav-top-list">
+  <a mat-list-item *ngIf="!isAuthenticated()" routerLink="/home" (click)="onSidenavClose()">
+    <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+  </a>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/dashboard" (click)="onSidenavClose()">
+    <mat-icon>home</mat-icon> <span class="nav-caption">Dashboard</span>
+  </a>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/foodbase" (click)="onSidenavClose()">
+    <mat-icon>fastfood</mat-icon> <span class="nav-caption">Foodbase</span>
+  </a>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/activities" (click)="onSidenavClose()">
+    <mat-icon>sports_tennis</mat-icon><span class="nav-caption">Activities</span>
+  </a>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/diet" (click)="onSidenavClose()">
+    <mat-icon>menu_book</mat-icon><span class="nav-caption">Diet</span>
+  </a>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/trainings" (click)="onSidenavClose()">
+    <mat-icon>sports_score</mat-icon><span class="nav-caption">Trainings</span>
+  </a>
+</mat-nav-list>
+<mat-nav-list class="sidenav-bottom-list">
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/settings" (click)="onSidenavClose()">
+    <mat-icon>settings</mat-icon> <span class="nav-caption">Settings</span>
+  </a>
+  <a mat-list-item routerLink="/about" (click)="onSidenavClose()">
+    <mat-icon>info</mat-icon> <span class="nav-caption">About</span>
+  </a>
+</mat-nav-list>

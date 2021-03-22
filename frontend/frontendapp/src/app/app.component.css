@@ -1,0 +1,13 @@
+mat-sidenav-container{
+  position: absolute;
+  min-height: 400px;
+}
+
+mat-sidenav {
+  background:rgb(255, 255, 255);
+  border-right-color: green;
+  border-right-style: solid;
+  border-bottom-color: green;
+  border-bottom-style: solid;
+  border-bottom-right-radius: 3px;
+}
