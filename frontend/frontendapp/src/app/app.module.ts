@@ -19,6 +19,7 @@ import { FoodbaseComponent } from './sections/foodbase/foodbase.component';
 import { ActivitiesComponent } from './sections/activities/activities.component';
 import { AboutComponent } from './sections/about/about.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
+import { FooterComponent } from './navigation/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.co
     FoodbaseComponent,
     ActivitiesComponent,
     AboutComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

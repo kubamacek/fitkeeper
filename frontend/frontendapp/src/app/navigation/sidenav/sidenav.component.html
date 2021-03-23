@@ -19,10 +19,19 @@
   </a>
 </mat-nav-list>
 <mat-nav-list class="sidenav-bottom-list">
+  <a mat-list-item routerLink="/about" (click)="onSidenavClose()">
+    <mat-icon>info</mat-icon> <span class="nav-caption">About</span>
+  </a>
   <a mat-list-item *ngIf="isAuthenticated()" routerLink="/settings" (click)="onSidenavClose()">
     <mat-icon>settings</mat-icon> <span class="nav-caption">Settings</span>
   </a>
-  <a mat-list-item routerLink="/about" (click)="onSidenavClose()">
-    <mat-icon>info</mat-icon> <span class="nav-caption">About</span>
+  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/logout" (click)="onSidenavClose()">
+    <mat-icon>logout</mat-icon> <span class="nav-caption">Logout</span>
+  </a>
+  <a mat-list-item *ngIf="!isAuthenticated()" routerLink="/login" (click)="onSidenavClose()">
+    <mat-icon>login</mat-icon> <span class="nav-caption">Login</span>
+  </a>
+  <a mat-list-item *ngIf="!isAuthenticated()" routerLink="/register" (click)="onSidenavClose()">
+    <mat-icon>app_registration</mat-icon> <span class="nav-caption">Register</span>
   </a>
 </mat-nav-list>
