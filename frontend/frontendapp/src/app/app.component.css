@@ -1,5 +1,5 @@
 mat-sidenav-container{
-  height: 90%;
+  height: 85%;
   width: 100%;
   margin: 0;
 }
@@ -11,4 +11,8 @@ mat-sidenav {
   border-right-style: solid;
   border-bottom-color: green;
   border-bottom-style: solid;
+}
+
+mat-sidenav-content{
+  padding: 10px;
 }

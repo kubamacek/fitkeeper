@@ -1,0 +1,10 @@
+.btn-sign-up{
+  background-color: green;
+  color: white;
+}
+
+.btn{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}

@@ -1,6 +1,7 @@
+import { NotifyService } from './../../common/services/notify.service';
 import { RegistrationService } from './../services/registration.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { urls } from 'src/environments/environment';
@@ -11,43 +12,35 @@ import { urls } from 'src/environments/environment';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  registerForm: FormGroup;
-  loading = false;
-  submitted = false;
+  form = new FormGroup({
+    username: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
+    password2: new FormControl('')
+  })
 
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private notifyService: NotifyService
   ) { }
 
   ngOnInit(): void {
-    this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
   }
 
-  get f() { return this.registerForm.controls; }
-
-  onSubmit() {
-    console.log('submitted')
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
-    this.loading = true;
-    this.registrationService.register(this.registerForm.value).pipe(
-      first()).subscribe(
-        data => {
-          console.log("register succeeded");
+  signUp(event) {
+    const data = this.form.value;
+    if (this.form.valid && data.password === data.password2) {
+      delete data['password2'];
+      this.registrationService.register(data).subscribe(
+        res => {
+          this.notifyService.notify_user("Successfully registered. You can log in now.");
           this.router.navigate(['login']);
         },
-        error => {
-          console.log(error);
-          this.loading = false;
-        }
-      )
-  };
+      );
+    }
+    else{
+      this.notifyService.notify_user("Form is not valid. Please try again.");
+    }
+  }
 }

@@ -3,10 +3,6 @@ a {
   color: white;
 }
 
-a:hover, a:active{
-  color: lightgray;
-}
-
 .navigation-items{
   list-style-type: none;
   padding: 0;
@@ -25,7 +21,6 @@ mat-toolbar{
 
 .title{
   font-weight: bold;
-  font-size: large;
   padding-left: 20px;
   padding-right: 20px;
 }

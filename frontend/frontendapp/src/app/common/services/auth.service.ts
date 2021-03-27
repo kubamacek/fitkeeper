@@ -1,3 +1,4 @@
+import { NotifyService } from './notify.service';
 import { urls } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private router: Router,
+    private notifyService: NotifyService
   ) {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -27,10 +29,11 @@ export class AuthService {
     return this.httpClient.post(urls.login, JSON.stringify(User), this.httpOptions).subscribe(
       data => {
         this.updateData(data['token'])
-        console.log('logged in');
+        this.notifyService.notify_user("Successfully logged in.");
         this.router.navigate(['dashboard']);
       },
       err => {
+        this.notifyService.notify_user("Something went wrong.");
         this.errors = err['error'];
       }
     )
@@ -52,9 +55,8 @@ export class AuthService {
   	this.token = null;
   	this.tokenExpires = null;
   	this.username = null;
-    console.log('logged out');
+    this.notifyService.notify_user("Successfully logged out.");
     this.router.navigate(['home']);
-
   }
 
   updateData(token): void {
