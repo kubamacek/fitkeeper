@@ -1,7 +1,7 @@
 import { urls } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/common/interfaces/User';
+import { User } from 'src/app/common/interfaces/user.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
