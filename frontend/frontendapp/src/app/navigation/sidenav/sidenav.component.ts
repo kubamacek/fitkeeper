@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/common/services/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -8,7 +9,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class SidenavComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
@@ -18,7 +21,11 @@ export class SidenavComponent implements OnInit {
   }
 
   isAuthenticated() {
-    return true;
+    return this.authService.isAuthenticated();
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
 }

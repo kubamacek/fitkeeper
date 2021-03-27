@@ -1,3 +1,4 @@
+import { AuthService } from './../../common/services/auth.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -9,10 +10,14 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
   title: string = 'fitkeeper';
+  user: string;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.user = this.authService.getUsername();
   }
 
   public onToggleSidenav = () => {
@@ -20,6 +25,11 @@ export class HeaderComponent implements OnInit {
   }
 
   isAuthenticated() {
-    return true;
+    return this.authService.isAuthenticated();
   }
+
+  logout(){
+    this.authService.logout();
+  }
+
 }

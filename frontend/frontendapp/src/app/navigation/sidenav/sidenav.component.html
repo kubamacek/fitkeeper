@@ -25,7 +25,7 @@
   <a mat-list-item *ngIf="isAuthenticated()" routerLink="/settings" (click)="onSidenavClose()">
     <mat-icon>settings</mat-icon> <span class="nav-caption">Settings</span>
   </a>
-  <a mat-list-item *ngIf="isAuthenticated()" routerLink="/logout" (click)="onSidenavClose()">
+  <a mat-list-item *ngIf="isAuthenticated()" (click)="logout()" (click)="onSidenavClose()">
     <mat-icon>logout</mat-icon> <span class="nav-caption">Logout</span>
   </a>
   <a mat-list-item *ngIf="!isAuthenticated()" routerLink="/login" (click)="onSidenavClose()">

@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from knox import views as knox_views
 from fitkeeper.backendapp import views
 from fitkeeper.account import views as accountviews
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 router = routers.DefaultRouter()
 router.register(r'ingredients', views.IngredientViewSet)
@@ -31,8 +31,7 @@ router.register(r'dailysummaries', views.DailySummaryViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    path('api/v1/auth/register/', accountviews.RegisterAPI.as_view()),
-    path('api/v1/auth/login/', accountviews.LoginAPI.as_view()),
-    path('api/v1/auth/logout/', knox_views.LogoutView.as_view()),
-    path('api/v1/auth/logoutall/', knox_views.LogoutAllView.as_view()),
+    path('api/v1/auth-user/', accountviews.UserView.as_view()),
+    path('api/v1/api-token-auth/', obtain_jwt_token),
+    path('api/v1/api-token-refresh/', refresh_jwt_token)
 ]

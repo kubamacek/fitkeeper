@@ -6,6 +6,20 @@ export const environment = {
   production: false
 };
 
+const apiversion = 'http://127.0.0.1:8000/api/v1/';
+export const urls = {
+  user: apiversion + 'auth-user/',
+  login: apiversion + 'api-token-auth/',
+  refresh: apiversion + 'api-token-refresh/',
+  about: apiversion + 'about/',
+  foodbase: apiversion + 'ingredients/',
+  activities: apiversion + 'activities/',
+  diet: apiversion + 'meals/',
+  trainings: apiversion + 'trainings/',
+  settings: apiversion + 'settings/',
+  dailysummaries: apiversion + 'dailysummaries/'
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

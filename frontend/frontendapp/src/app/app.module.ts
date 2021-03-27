@@ -20,6 +20,8 @@ import { ActivitiesComponent } from './sections/activities/activities.component'
 import { AboutComponent } from './sections/about/about.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 import { FooterComponent } from './navigation/footer/footer.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,15 @@ import { FooterComponent } from './navigation/footer/footer.component';
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    HttpClientModule,
+    HttpClient
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
