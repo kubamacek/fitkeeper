@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'fitkeeper.backendapp',
     'fitkeeper.account',
     'corsheaders',
-    'knox',
 ]
 
 MIDDLEWARE = [
