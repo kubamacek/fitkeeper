@@ -1,3 +1,4 @@
+import { Ingredient } from './../../common/interfaces/ingredient.interface';
 import { Response } from './../../common/interfaces/response.interface';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ export class FoodService {
 
   constructor(private _http: HttpClient) { }
 
-  getData(url: string): Observable<Response> {
-    return this._http.get<Response>(url);
+  getData(url: string): Observable<Ingredient[]> {
+    return this._http.get<Ingredient[]>(url);
   }
 }
