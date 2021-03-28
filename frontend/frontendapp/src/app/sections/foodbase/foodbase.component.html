@@ -15,31 +15,31 @@
 
     <!-- Progress Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ingredient </th>
       <td mat-cell *matCellDef="let row"> {{row.name}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="energy">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Energy </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Energy (kcal/100g) </th>
       <td mat-cell *matCellDef="let row"> {{row.energy}} </td>
     </ng-container>
 
     <!-- Color Column -->
     <ng-container matColumnDef="fat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fat </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fat (g) </th>
       <td mat-cell *matCellDef="let row"> {{row.fat}} </td>
     </ng-container>
 
     <!-- Protein Column -->
     <ng-container matColumnDef="protein">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Protein </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Protein (g) </th>
       <td mat-cell *matCellDef="let row"> {{row.protein}} </td>
     </ng-container>
 
     <!-- Carbohydrate Column -->
     <ng-container matColumnDef="carbohydrate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Carbohydrate </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Carbohydrate (g) </th>
       <td mat-cell *matCellDef="let row"> {{row.carbohydrate}} </td>
     </ng-container>
 
@@ -52,5 +52,5 @@
     </tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
 </div>
