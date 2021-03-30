@@ -65,7 +65,7 @@ export class AuthService {
 
     const tokenParts = this.token.split(/\./);
     const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
-    console.log(tokenDecoded);
+    //console.log(tokenDecoded);
 
     this.tokenExpires = new Date(tokenDecoded * 1000);
     this.username = tokenDecoded.username;
@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   getUserId(): string {
-    return this.user_id ? this.user_id : '';
+    return this.user_id.toString() ? this.user_id : '';
   }
 
 }

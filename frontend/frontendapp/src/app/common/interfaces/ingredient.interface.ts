@@ -1,4 +1,4 @@
-export class Ingredient{
+export interface Ingredient{
   id: number;
   name: string;
   energy: number;
