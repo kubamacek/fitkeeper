@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Ingredient, MealComponent, Meal, Activity, Training, DailySummary
 from .serializers import IngredientSerializer, MealSerializer, MealComponentSerializer, ActivitySerializer, TrainingSerializer, DailySummarySerializer
 
@@ -19,6 +20,8 @@ class MealViewSet(viewsets.ModelViewSet):
     queryset = Meal.objects.all()
     serializer_class = MealSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user', 'day']
 
 
 class ActivityViewSet(viewsets.ModelViewSet):
@@ -31,9 +34,13 @@ class TrainingViewSet(viewsets.ModelViewSet):
     queryset = Training.objects.all()
     serializer_class = TrainingSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user', 'day']
 
 
 class DailySummaryViewSet(viewsets.ModelViewSet):
     queryset = DailySummary.objects.all()
     serializer_class = DailySummarySerializer
     http_method_names = ['get']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user', 'day']
