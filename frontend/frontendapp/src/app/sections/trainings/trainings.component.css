@@ -1,0 +1,9 @@
+table {
+  width: 100%;
+}
+
+.datepicker{
+  display:flex;
+  justify-content: center;
+  align-items: center;;
+}

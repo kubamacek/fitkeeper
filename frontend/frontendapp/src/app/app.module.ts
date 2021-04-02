@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/common/services/auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -20,8 +21,9 @@ import { ActivitiesComponent } from './sections/activities/activities.component'
 import { AboutComponent } from './sections/about/about.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 import { FooterComponent } from './navigation/footer/footer.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './common/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     HttpClientModule,
-    HttpClient
+    HttpClient,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
