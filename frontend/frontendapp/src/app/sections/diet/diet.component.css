@@ -1,0 +1,13 @@
+.newmeal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-mc-btn{
+  height: 100%;
+}
+
+.mat-form-field{
+  padding-right: 5px;
+}

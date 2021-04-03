@@ -1,1 +1,49 @@
-<p>diet works!</p>
+<div class="datepicker">
+  <mat-form-field class="date" appearance="fill">
+    <mat-label>Show meals for day</mat-label>
+    <input matInput [matDatepicker]="datepicker" (dateChange)="dayChanged($event)">
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker></mat-datepicker>
+  </mat-form-field>
+</div>
+<form class="form-horizontal" [formGroup]="newMealForm">
+  <div mat-card-content>
+    <div class="newmeal">
+    <mat-form-field class="date" appearance="fill">
+      <mat-label>Select day</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="day" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input type="string" matInput formControlName="name" required>
+    </mat-form-field>
+    <button class="add-mc-btn" mat-raised-button (click)="addMealComponentButtonClick()"> Add meal component </button>
+    </div>
+    <div formArrayName="meal_components" class="newmeal"
+      *ngFor="let product of newMealForm.get('meal_components')['controls']; let i = index">
+      <div [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label>Ingredient</mat-label>
+          <input type="text" matInput formControlName="ingredient" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Weight (g)</mat-label>
+          <input type="number" matInput formControlName="weight" required>
+        </mat-form-field>
+        <button mat-raised-button type="warn" (click)="removeMealComponentButtonClick(i)">
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+  <div mat-card-actions class="newmeal">
+    <button mat-raised-button (click)="addMeal()"> Add meal </button>
+  </div>
+</form>
