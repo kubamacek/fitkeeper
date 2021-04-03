@@ -22,4 +22,8 @@ export class TrainingService {
   deleteTraining(id: string): Observable<{}>{
     return this.httpClient.delete(urls.trainings + id, this.httpOptions);
   }
+
+  addTraining(data): Observable<{}>{
+    return this.httpClient.post(urls.trainings, data, this.httpOptions);
+  }
 }

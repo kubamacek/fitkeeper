@@ -1,6 +1,6 @@
 <div class="datepicker">
-  <mat-form-field appearance="fill">
-    <mat-label>Select date</mat-label>
+  <mat-form-field class="date" appearance="fill">
+    <mat-label>Show trainings for day</mat-label>
     <input matInput [matDatepicker]="datepicker" (dateChange)="dayChanged($event)">
     <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker #datepicker></mat-datepicker>
@@ -43,4 +43,36 @@
       <td class="mat-cell" colspan="6">No trainings on this day.</td>
     </tr>
   </table>
+
+  <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
 </div>
+<div class="newtraining">
+  <h1>Add new training</h1>
+</div>
+<form [formGroup]="form" (ngSubmit)="addTraining($event)">
+  <div mat-card-content>
+    <div class="newtraining">
+      <mat-form-field class="date" appearance="fill">
+        <mat-label>Select day</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="day" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Select activity</mat-label>
+        <mat-select formControlName="activity">
+          <mat-option *ngFor="let activity of activities" [value]="activity.id">{{ activity.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Duration (minutes)</mat-label>
+        <input type="number" matInput formControlName="duration" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-card-actions>
+    <div class="newtraining">
+      <button mat-raised-button class="add-btn"> Add </button>
+    </div>
+  </div>
+</form>
