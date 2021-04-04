@@ -79,6 +79,22 @@ class DailySummarySerializer(serializers.ModelSerializer):
     trainings = TrainingSerializer(many=True)
     meals = MealSerializer(many=True)
 
+    calories_eaten = serializers.SerializerMethodField()
+    calories_burned = serializers.SerializerMethodField()
+
+    def get_calories_eaten(self, obj):
+        sum = 0
+        for meals in obj.meals.all():
+            for mc in meals.meal_components.all():
+                sum += (mc.weight * mc.ingredient.energy)/100
+        return int(sum)
+
+    def get_calories_burned(self, obj):
+        sum = 0
+        for training in obj.trainings.all():
+            sum += (training.duration * training.activity.calories_burned)/60
+        return int(sum)
+
     class Meta:
         model = DailySummary
         fields = '__all__'
