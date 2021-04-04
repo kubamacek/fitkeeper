@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { Ingredient } from 'src/app/common/interfaces/ingredient.interface';
 import { map, startWith } from 'rxjs/operators';
 import { MealComponent } from 'src/app/common/interfaces/mealcomponent.interface';
-import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Meal } from 'src/app/common/interfaces/meal.interface';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -34,8 +33,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class DietComponent implements OnInit {
 
-  @ViewChild('outerSort', { static: true }) sort: MatSort;
-  @ViewChildren('innerSort') innerSort: QueryList<MatSort>;
   @ViewChildren('innerTables') innerTables: QueryList<MatTable<MealComponent>>;
 
   dataSource = new MatTableDataSource<Meal>();
@@ -80,7 +77,6 @@ export class DietComponent implements OnInit {
   toggleRow(element: Meal) {
     element.meal_components && (element.meal_components as MatTableDataSource<MealComponent>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
-    this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<MealComponent>).sort = this.innerSort.toArray()[index]);
   }
 
   manageNameControl(index: number) {
