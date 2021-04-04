@@ -3,12 +3,17 @@ import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@ang
 import { MealService } from './meal.service';
 import { DatePipe } from '@angular/common';
 import { NotifyService } from './../../common/services/notify.service';
-import { Component, OnInit, ɵLocaleDataIndex } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren, ɵLocaleDataIndex } from '@angular/core';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { urls } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Ingredient } from 'src/app/common/interfaces/ingredient.interface';
 import { map, startWith } from 'rxjs/operators';
+import { MealComponent } from 'src/app/common/interfaces/mealcomponent.interface';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Meal } from 'src/app/common/interfaces/meal.interface';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-diet',
@@ -18,9 +23,25 @@ import { map, startWith } from 'rxjs/operators';
     NotifyService,
     DatePipe,
     MealService
+  ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
   ]
 })
 export class DietComponent implements OnInit {
+
+  @ViewChild('outerSort', { static: true }) sort: MatSort;
+  @ViewChildren('innerSort') innerSort: QueryList<MatSort>;
+  @ViewChildren('innerTables') innerTables: QueryList<MatTable<MealComponent>>;
+
+  dataSource = new MatTableDataSource<Meal>();
+  columnsToDisplay = ['day', 'name', 'toggle', 'delete'];
+  innerDisplayedColumns = ['ingredient', 'weight'];
+  expandedElement: Meal | null;
 
   date: string;
   user: string;
@@ -37,13 +58,15 @@ export class DietComponent implements OnInit {
     private datePipe: DatePipe,
     private mealService: MealService,
     private formBuilder: FormBuilder,
-    private foodService: FoodService
+    private foodService: FoodService,
+    private cd: ChangeDetectorRef
   ) {
-    this.date = this.datePipe.transform(this.today, 'yyyy-MM-dd');
-    this.user = this.authService.getUserId();
-   }
+  }
 
   ngOnInit(): void {
+    this.date = this.datePipe.transform(this.today, 'yyyy-MM-dd');
+    this.user = this.authService.getUserId();
+    this.getMeals();
     this.newMealForm = this.formBuilder.group({
       name: this.formBuilder.control(""),
       day: this.formBuilder.control(""),
@@ -52,9 +75,15 @@ export class DietComponent implements OnInit {
     this.foodService.getData(urls.foodbase).subscribe(response => {
       this.ingredients = response;
     })
-   }
+  }
 
-  manageNameControl(index: number){
+  toggleRow(element: Meal) {
+    element.meal_components && (element.meal_components as MatTableDataSource<MealComponent>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
+    this.cd.detectChanges();
+    this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<MealComponent>).sort = this.innerSort.toArray()[index]);
+  }
+
+  manageNameControl(index: number) {
     let arrayControl = this.newMealForm.get("meal_components") as FormArray;
     this.filteredOptions[index] = arrayControl.at(index).get('ingredient').valueChanges.pipe(
       startWith(''),
@@ -63,20 +92,24 @@ export class DietComponent implements OnInit {
     );
   }
 
-  getMeals(){
-    this.mealService.getData(urls.diet, {day: this.date, user: this.user}).subscribe(response => {
+  getMeals() {
+    this.mealService.getData(urls.diet, { day: this.date, user: this.user }).subscribe(response => {
       this.meals = response;
-      console.log(this.meals);
+      this.meals.forEach(meal => {
+        meal["meal_components"] = new MatTableDataSource(meal["meal_components"]);
+      })
+      this.dataSource.data = this.meals;
     })
+
   }
 
-  dayChanged(event){
+  dayChanged(event) {
     this.date = this.datePipe.transform(event.value, 'yyyy-MM-dd');
     this.notifyService.notify_user("Day changed to " + this.date);
     this.getMeals();
   }
 
-  addMealComponentFormGroup(): FormGroup{
+  addMealComponentFormGroup(): FormGroup {
     return this.formBuilder.group({
       ingredient: ["", Validators.required],
       weight: ["", Validators.required]
@@ -86,15 +119,15 @@ export class DietComponent implements OnInit {
   addMealComponentButtonClick(): void {
     let controls = <FormArray>this.newMealForm.get('meal_components');
     controls.push(this.addMealComponentFormGroup());
-    this.manageNameControl(controls.length -1);
+    this.manageNameControl(controls.length - 1);
   }
 
   removeMealComponentButtonClick(index: number): void {
     (<FormArray>this.newMealForm.get("meal_components")).removeAt(index);
   }
 
-  addMeal(){
-    if (this.newMealForm.valid){
+  addMeal() {
+    if (this.newMealForm.valid) {
       let data = this.newMealForm.value;
       data["meal_components"].forEach(element => {
         element["ingredient"] = element["ingredient"]["id"]
@@ -106,9 +139,16 @@ export class DietComponent implements OnInit {
         this.getMeals();
       })
     }
-    else{
+    else {
       this.notifyService.notify_user("Not valid form. Please try again.");
     }
+  }
+
+  deleteMeal(meal){
+    this.mealService.deleteMeal(meal.id).subscribe(response => {
+      this.notifyService.notify_user("Meal removed!");
+      this.getMeals();
+    })
   }
 
   displayFn(ingredient: Ingredient): string {

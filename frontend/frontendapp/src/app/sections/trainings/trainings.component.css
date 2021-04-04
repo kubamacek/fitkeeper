@@ -5,7 +5,8 @@ table {
 .datepicker{
   display:flex;
   justify-content: center;
-  align-items: center;;
+  align-items: center;
+  padding-bottom: 5px;
 }
 
 .example-container .mat-form-field + .mat-form-field {
@@ -24,4 +25,11 @@ table {
 
 .add-btn{
   padding-bottom: 5px;
+}
+
+.addtraining{
+  padding-top: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: green;
 }
