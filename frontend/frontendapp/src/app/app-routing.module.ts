@@ -1,3 +1,4 @@
+import { AuthGuard } from './common/guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -14,13 +15,30 @@ import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.co
 import { AboutComponent } from './sections/about/about.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'home', component: HomeComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'diet', component: DietComponent},
-  { path: 'trainings', component: TrainingsComponent},
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'diet',
+    component: DietComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'trainings',
+    component: TrainingsComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'foodbase', component: FoodbaseComponent},
   { path: 'activities', component: ActivitiesComponent},
-  { path: 'settings', component: SettingsComponent},
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegistrationComponent},
   { path: 'about', component: AboutComponent},
