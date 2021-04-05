@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   getUserId(): string {
-    return this.user_id.toString() ? this.user_id : '';
+    return this.user_id ? this.user_id : '';
   }
 
   getToken(): string {
