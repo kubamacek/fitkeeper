@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
@@ -8,6 +10,11 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        MatTabsModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule
+      ],
       declarations: [ HomeComponent ]
     })
     .compileComponents();
