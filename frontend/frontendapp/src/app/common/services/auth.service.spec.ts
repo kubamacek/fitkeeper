@@ -6,10 +6,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { AuthService } from './auth.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../interfaces/user.interface';
 import { urls } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('AuthService', () => {
   let service: AuthService;
