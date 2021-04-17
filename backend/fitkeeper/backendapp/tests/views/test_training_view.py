@@ -66,7 +66,7 @@ class TrainingViewSetTest(APITestCase):
         self.assertEqual(response.data.get('duration'), 75)
         self.assertEqual(response.data.get('activity'), tennis.name)
 
-    def test_wrong_post_activity(self):
+    def test_wrong_post_training(self):
         data = json.dumps({
             "duration": 75})
         client = APIClient()
@@ -74,7 +74,7 @@ class TrainingViewSetTest(APITestCase):
         response = client.post('/api/v1/trainings/', data=data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_put_activity(self):
+    def test_put_training(self):
         swimming = Activity.objects.get(name="swimming")
         training = Training.objects.get(activity=swimming.pk)
         pk = training.pk
@@ -92,7 +92,7 @@ class TrainingViewSetTest(APITestCase):
         training = Training.objects.get(activity=swimming.pk)
         self.assertEqual(training.duration, 30)
 
-    def test_wrong_put_activity(self):
+    def test_wrong_put_training(self):
         training = Training.objects.first()
         pk = training.pk
         data = json.dumps({
@@ -102,17 +102,17 @@ class TrainingViewSetTest(APITestCase):
         response = client.put('/api/v1/trainings/{}/'.format(pk), data=data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_delete_activity(self):
+    def test_delete_training(self):
         swimming = Training.objects.first()
         pk = swimming.pk
         client = APIClient()
         client.force_authenticate(user=self.user)
         response = client.delete('/api/v1/trainings/{}/'.format(pk))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertRaises(Activity.DoesNotExist, Activity.objects.get, pk=pk)
+        self.assertRaises(Training.DoesNotExist, Training.objects.get, pk=pk)
 
-    def test_wrong_delete_activity(self):
-        pks = [obj.pk for obj in Activity.objects.all()]
+    def test_wrong_delete_training(self):
+        pks = [obj.pk for obj in Training.objects.all()]
         not_existing = max(pks) + 1
         client = APIClient()
         client.force_authenticate(user=self.user)
