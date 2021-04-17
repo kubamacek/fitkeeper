@@ -17,4 +17,10 @@ describe('NotifyService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should call open method', () => {
+    spyOn(service, 'notify_user');
+    service.notify_user('hello');
+    expect(service.notify_user).toHaveBeenCalledWith('hello');
+  });
 });
