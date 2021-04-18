@@ -41,10 +41,20 @@ describe('DashboardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have h1 daily summary entry', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('Daily summary');
+  });
+
+  it('should call getData on init', () => {
+    spyOn(component, "getData").and.callThrough();
+    fixture.detectChanges();
+    expect(component.getData).toHaveBeenCalledTimes(1);
+  })
 });

@@ -21,7 +21,7 @@ export class ActivitiesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private activityService: ActivityService) { }
+  constructor(public activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.activityService.getData(urls.activities).subscribe(response => {

@@ -23,7 +23,7 @@ export class FoodbaseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private foodService: FoodService) { }
+  constructor(public foodService: FoodService) { }
 
   ngOnInit(): void {
     this.foodService.getData(urls.foodbase).subscribe(response => {

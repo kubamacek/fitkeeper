@@ -44,10 +44,15 @@ describe('DietComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DietComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call get meals on init', () => {
+    spyOn(component, "getMeals").and.callThrough();
+    fixture.detectChanges();
+    expect(component.getMeals).toHaveBeenCalledTimes(1);
+  })
 });

@@ -47,10 +47,15 @@ describe('TrainingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrainingsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call get trainings on init', () => {
+    spyOn(component, "getTrainings").and.callThrough();
+    fixture.detectChanges();
+    expect(component.getTrainings).toHaveBeenCalledTimes(1);
+  })
 });
