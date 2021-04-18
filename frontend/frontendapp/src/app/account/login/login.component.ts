@@ -1,6 +1,5 @@
 import { AuthService } from './../../common/services/auth.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,8 +13,7 @@ export class LoginComponent {
   password: string;
 
   constructor(
-    private AuthService: AuthService,
-    private router: Router
+    private AuthService: AuthService
   ) {}
 
   onSubmit() {
