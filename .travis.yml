@@ -1,0 +1,13 @@
+language: python
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: Backend static code analysis
+      script: docker build -f backend/Dockerfile-static-code-analysis backend/
+    - stage: Backend + PostgreSQL test
+      env:
+        - DOCKER_COMPOSE_VERSION=1.29.1
+      script: docker-compose -f docker-compose-backend-test.yml up --exit-code-from web

@@ -1,5 +1,6 @@
 from django.test import TestCase
-from fitkeeper.backendapp.models import Training, Activity, MealComponent, Meal, Ingredient, DailySummary, User
+from fitkeeper.backendapp.models import (Training, Activity, MealComponent,
+                                         Meal, Ingredient, DailySummary, User)
 
 import datetime
 
@@ -10,7 +11,7 @@ class DailySummaryTestCase(TestCase):
         self.day = datetime.date(2021, 3, 8)
         self.meal_name = "Banana shake"
         self.activity = Activity.objects.create(name="swimming",
-                                                      calories_burned=600)
+                                                calories_burned=600)
         self.first_ingredient = Ingredient.objects.create(name="Banana",
                                                           energy=89,
                                                           fat=0.4,

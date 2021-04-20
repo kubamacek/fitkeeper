@@ -1,9 +1,8 @@
 from rest_framework import status
 from rest_framework.test import force_authenticate, APIClient, APITestCase, APIRequestFactory
 from fitkeeper.backendapp.models import Ingredient, MealComponent, Meal, User
-from fitkeeper.backendapp.serializers import MealSerializer, IngredientSerializer
-from fitkeeper.backendapp.views import MealViewSet, IngredientViewSet
-from decimal import Decimal
+from fitkeeper.backendapp.serializers import MealSerializer
+from fitkeeper.backendapp.views import MealViewSet
 from datetime import date
 
 import json

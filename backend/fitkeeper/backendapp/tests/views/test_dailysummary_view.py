@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import force_authenticate, APIClient, APITestCase, APIRequestFactory
-from django.test import TestCase
-from fitkeeper.backendapp.models import Training, Activity, MealComponent, Meal, Ingredient, DailySummary, User
+from fitkeeper.backendapp.models import (Training, Activity, MealComponent,
+                                         Meal, Ingredient, DailySummary, User)
 from fitkeeper.backendapp.serializers import DailySummarySerializer
 from fitkeeper.backendapp.views import DailySummaryViewSet
 
@@ -82,7 +82,9 @@ class DailySummaryViewSetTestCase(APITestCase):
         data = {}
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/dailysummaries/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/dailysummaries/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_delete_not_supported(self):
