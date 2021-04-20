@@ -28,9 +28,9 @@ export class FoodbaseComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.foodService.getData(urls.foodbase).subscribe(response => {
       console.log(response);
-      this.ingredients = response
+      this.ingredients = response;
       this.dataSource.data = this.ingredients;
-   })
+   });
   }
 
   ngAfterViewInit(){

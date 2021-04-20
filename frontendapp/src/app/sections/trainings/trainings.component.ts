@@ -33,7 +33,7 @@ export class TrainingsComponent implements OnInit, AfterViewInit {
     day: new FormControl('', [Validators.required]),
     activity: new FormControl('', [Validators.required]),
     duration: new FormControl('', [Validators.required, Validators.min(0), Validators.max(1440)])
-  })
+  });
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -64,34 +64,34 @@ export class TrainingsComponent implements OnInit, AfterViewInit {
     this.trainingService.getData(urls.trainings, {day: this.date, user: this.user}).subscribe(response => {
       this.trainings = response;
       this.dataSource.data = this.trainings;
-    })
+    });
   }
 
   dayChanged(event){
     this.date = this.datePipe.transform(event.value, 'yyyy-MM-dd');
-    this.notifyService.notify_user("Day changed to " + this.date);
+    this.notifyService.notify_user('Day changed to ' + this.date);
     this.getTrainings();
   }
 
   deleteTraining(training){
     this.trainingService.deleteTraining(training.id).subscribe(response => {
-      this.notifyService.notify_user("Training removed!");
+      this.notifyService.notify_user('Training removed!');
       this.getTrainings();
-    })
+    });
   }
 
   addTraining($event){
     const data = this.form.value;
     if (this.form.valid){
-      data["day"] = this.datePipe.transform(data["day"], 'yyyy-MM-dd');
-      data["user"] = this.authService.getUserId();
+      data.day = this.datePipe.transform(data.day, 'yyyy-MM-dd');
+      data.user = this.authService.getUserId();
       this.trainingService.addTraining(JSON.stringify(data)).subscribe(response => {
-        this.notifyService.notify_user("Training added successfully.");
+        this.notifyService.notify_user('Training added successfully.');
         this.getTrainings();
-      })
+      });
     }
     else{
-      this.notifyService.notify_user("Not valid form. Please try again.");
+      this.notifyService.notify_user('Not valid form. Please try again.');
     }
   }
 

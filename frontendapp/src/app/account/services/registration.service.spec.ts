@@ -24,14 +24,14 @@ describe('RegistrationService', () => {
 
   afterEach(() => {
     httpTestingController.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   it('should register user and return it', () => {
-    const newUser: User = {username: "paul", password: "paul", email: "paul@paul.com"};
+    const newUser: User = {username: 'paul', password: 'paul', email: 'paul@paul.com'};
     service.register(newUser).subscribe(
       data => expect(data).toEqual(newUser, 'should return new user'),
       fail

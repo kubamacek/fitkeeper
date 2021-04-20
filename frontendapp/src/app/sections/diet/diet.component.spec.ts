@@ -51,8 +51,8 @@ describe('DietComponent', () => {
   });
 
   it('should call get meals on init', () => {
-    spyOn(component, "getMeals").and.callThrough();
+    spyOn(component, 'getMeals').and.callThrough();
     fixture.detectChanges();
     expect(component.getMeals).toHaveBeenCalledTimes(1);
-  })
+  });
 });

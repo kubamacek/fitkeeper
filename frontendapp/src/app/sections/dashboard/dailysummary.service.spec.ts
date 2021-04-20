@@ -27,53 +27,53 @@ describe('DailysummaryService', () => {
 
   it('should get summary', () => {
     const data = {
-      "id": 7,
-      "trainings": [
+      id: 7,
+      trainings: [
         {
-          "id": 19,
-          "day": "2021-04-04",
-          "duration": 12,
-          "user": "root",
-          "activity": "running"
+          id: 19,
+          day: '2021-04-04',
+          duration: 12,
+          user: 'root',
+          activity: 'running'
         },
         {
-          "id": 20,
-          "day": "2021-04-04",
-          "duration": 120,
-          "user": "root",
-          "activity": "swimming"
+          id: 20,
+          day: '2021-04-04',
+          duration: 120,
+          user: 'root',
+          activity: 'swimming'
         }
       ],
-      "meals": [
+      meals: [
         {
-          "id": 13,
-          "name": "hotdog",
-          "day": "2021-04-04",
-          "meal_components": [
+          id: 13,
+          name: 'hotdog',
+          day: '2021-04-04',
+          meal_components: [
             {
-              "id": 21,
-              "weight": 12,
-              "ingredient": "flour"
+              id: 21,
+              weight: 12,
+              ingredient: 'flour'
             },
             {
-              "id": 22,
-              "weight": 122,
-              "ingredient": "milk"
+              id: 22,
+              weight: 122,
+              ingredient: 'milk'
             }
           ],
-          "user": "root"
+          user: 'root'
         }
       ],
-      "calories_eaten": 3087,
-      "calories_burned": 1330,
-      "day": "2021-04-04",
-      "user": 1
-    }
+      calories_eaten: 3087,
+      calories_burned: 1330,
+      day: '2021-04-04',
+      user: 1
+    };
     service.getData(urls.dailysummaries, { day: '2021-04-04', user: '1' }).subscribe((response: any) => {
       expect(response).toEqual(data);
-    })
+    });
     const req = httpTestingController.expectOne(urls.dailysummaries + '?day=2021-04-04&user=1');
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
     req.flush(data);
   });
 });

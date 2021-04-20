@@ -65,22 +65,23 @@ export class DietComponent implements OnInit {
     this.user = this.authService.getUserId();
     this.getMeals();
     this.newMealForm = this.formBuilder.group({
-      name: this.formBuilder.control(""),
-      day: this.formBuilder.control(""),
+      name: this.formBuilder.control(''),
+      day: this.formBuilder.control(''),
       meal_components: this.formBuilder.array([], Validators.required)
-    })
+    });
     this.foodService.getData(urls.foodbase).subscribe(response => {
       this.ingredients = response;
-    })
+    });
   }
 
   toggleRow(element: Meal) {
-    element.meal_components && (element.meal_components as MatTableDataSource<MealComponent>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
+    element.meal_components && (element.meal_components as MatTableDataSource<MealComponent>).data.length ?
+    (this.expandedElement = this.expandedElement === element ? null : element) : null;
     this.cd.detectChanges();
   }
 
   manageNameControl(index: number) {
-    let arrayControl = this.newMealForm.get("meal_components") as FormArray;
+    const arrayControl = this.newMealForm.get('meal_components') as FormArray;
     this.filteredOptions[index] = arrayControl.at(index).get('ingredient').valueChanges.pipe(
       startWith(''),
       map(value => typeof value === 'string' ? value : value.name),
@@ -92,59 +93,59 @@ export class DietComponent implements OnInit {
     this.mealService.getData(urls.diet, { day: this.date, user: this.user }).subscribe(response => {
       this.meals = response;
       this.meals.forEach(meal => {
-        meal["meal_components"] = new MatTableDataSource(meal["meal_components"]);
-      })
+        meal.meal_components = new MatTableDataSource(meal.meal_components);
+      });
       this.dataSource.data = this.meals;
-    })
+    });
 
   }
 
   dayChanged(event) {
     this.date = this.datePipe.transform(event.value, 'yyyy-MM-dd');
-    this.notifyService.notify_user("Day changed to " + this.date);
+    this.notifyService.notify_user('Day changed to ' + this.date);
     this.getMeals();
   }
 
   addMealComponentFormGroup(): FormGroup {
     return this.formBuilder.group({
-      ingredient: ["", Validators.required],
-      weight: ["", Validators.required]
+      ingredient: ['', Validators.required],
+      weight: ['', Validators.required]
     });
   }
 
   addMealComponentButtonClick(): void {
-    let controls = <FormArray>this.newMealForm.get('meal_components');
+    const controls = this.newMealForm.get('meal_components') as FormArray;
     controls.push(this.addMealComponentFormGroup());
     this.manageNameControl(controls.length - 1);
   }
 
   removeMealComponentButtonClick(index: number): void {
-    (<FormArray>this.newMealForm.get("meal_components")).removeAt(index);
+    (this.newMealForm.get('meal_components') as FormArray).removeAt(index);
   }
 
   addMeal() {
     if (this.newMealForm.valid) {
-      let data = this.newMealForm.value;
-      data["meal_components"].forEach(element => {
-        element["ingredient"] = element["ingredient"]["id"]
+      const data = this.newMealForm.value;
+      data.meal_components.forEach(element => {
+        element.ingredient = element.ingredient.id;
       });
-      data["user"] = this.authService.getUserId();
-      data["day"] = this.datePipe.transform(data["day"], 'yyyy-MM-dd');
+      data.user = this.authService.getUserId();
+      data.day = this.datePipe.transform(data.day, 'yyyy-MM-dd');
       this.mealService.addMeal(JSON.stringify(data)).subscribe(response => {
-        this.notifyService.notify_user("Meal added successfully.");
+        this.notifyService.notify_user('Meal added successfully.');
         this.getMeals();
-      })
+      });
     }
     else {
-      this.notifyService.notify_user("Not valid form. Please try again.");
+      this.notifyService.notify_user('Not valid form. Please try again.');
     }
   }
 
   deleteMeal(meal){
     this.mealService.deleteMeal(meal.id).subscribe(response => {
-      this.notifyService.notify_user("Meal removed!");
+      this.notifyService.notify_user('Meal removed!');
       this.getMeals();
-    })
+    });
   }
 
   displayFn(ingredient: Ingredient): string {

@@ -13,10 +13,10 @@ export class LoginComponent {
   password: string;
 
   constructor(
-    private AuthService: AuthService
+    private authService: AuthService
   ) {}
 
   onSubmit() {
-    this.AuthService.login({'username': this.username, 'password': this.password})
+    this.authService.login({username: this.username, password: this.password});
   }
 }

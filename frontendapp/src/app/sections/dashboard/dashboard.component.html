@@ -17,7 +17,7 @@
           <mat-icon>check_circle</mat-icon>     {{ training.activity }}: {{ training.duration }} minutes
         </mat-list-item>
       </mat-list>
-      <h4>Calories burned: {{ calories_burned }}</h4>
+      <h4>Calories burned: {{ caloriesBurned }}</h4>
     </mat-tab>
     <mat-tab label="Meals">
       <mat-list *ngFor="let meal of meals" role="list">
@@ -25,7 +25,7 @@
           <mat-icon>check_circle</mat-icon>     {{ meal.name }}
         </mat-list-item>
       </mat-list>
-      <h4>Calories eaten: {{ calories_eaten }}</h4>
+      <h4>Calories eaten: {{ caloriesEaten }}</h4>
     </mat-tab>
   </mat-tab-group>
 </div>

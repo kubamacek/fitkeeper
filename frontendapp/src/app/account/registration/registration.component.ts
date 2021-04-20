@@ -17,7 +17,7 @@ export class RegistrationComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
     password2: new FormControl('')
-  })
+  });
 
   constructor(
     private router: Router,
@@ -31,16 +31,16 @@ export class RegistrationComponent implements OnInit {
   signUp(event) {
     const data = this.form.value;
     if (this.form.valid && data.password === data.password2) {
-      delete data['password2'];
+      delete data.password2;
       this.registrationService.register(data).subscribe(
         res => {
-          this.notifyService.notify_user("Successfully registered. You can log in now.");
+          this.notifyService.notify_user('Successfully registered. You can log in now.');
           this.router.navigate(['login']);
         },
       );
     }
     else{
-      this.notifyService.notify_user("Form is not valid. Please try again.");
+      this.notifyService.notify_user('Form is not valid. Please try again.');
     }
   }
 }

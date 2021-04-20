@@ -18,7 +18,7 @@ export const urls = {
   trainings: apiversion + 'trainings/',
   settings: apiversion + 'settings/',
   dailysummaries: apiversion + 'dailysummaries/'
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

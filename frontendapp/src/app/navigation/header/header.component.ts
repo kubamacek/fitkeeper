@@ -9,7 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
-  title: string = 'fitkeeper';
+  title = 'fitkeeper';
   user: string;
 
   constructor(

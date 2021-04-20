@@ -16,7 +16,7 @@ import { urls } from 'src/environments/environment';
 describe('ActivitiesComponent', () => {
   let component: ActivitiesComponent;
   let fixture: ComponentFixture<ActivitiesComponent>;
-  let activitySpy = {getData: jasmine.createSpy('getData')};
+  const activitySpy = {getData: jasmine.createSpy('getData')};
   activitySpy.getData.and.returnValue(of([]));
 
   beforeEach(async () => {

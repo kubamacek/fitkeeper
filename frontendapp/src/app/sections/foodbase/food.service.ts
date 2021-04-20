@@ -9,9 +9,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FoodService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getData(url: string): Observable<Ingredient[]> {
-    return this._http.get<Ingredient[]>(url);
+    return this.http.get<Ingredient[]>(url);
   }
 }

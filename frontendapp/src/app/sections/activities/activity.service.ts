@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ActivityService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getData(url: string): Observable<Activity[]> {
-    return this._http.get<Activity[]>(url);
+    return this.http.get<Activity[]>(url);
   }
 }

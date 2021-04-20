@@ -17,7 +17,7 @@ import { urls } from 'src/environments/environment';
 describe('FoodbaseComponent', () => {
   let component: FoodbaseComponent;
   let fixture: ComponentFixture<FoodbaseComponent>;
-  let foodSpy = {getData: jasmine.createSpy('getData')};
+  const foodSpy = {getData: jasmine.createSpy('getData')};
   foodSpy.getData.and.returnValue(of([]));
 
   beforeEach(async () => {

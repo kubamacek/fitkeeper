@@ -27,14 +27,14 @@ describe('ActivityService', () => {
 
   it('should get activities', () => {
     const data = [
-      {"id": 1, "name": "tennis", "calories_burned": 600},
-      {"id": 2, "name": "dodgeball", "calories_burned": 533}
-    ]
+      {id: 1, name: 'tennis', calories_burned: 600},
+      {id: 2, name: 'dodgeball', calories_burned: 533}
+    ];
     service.getData(urls.activities).subscribe((response) => {
       expect(response).toEqual(data);
-    })
+    });
     const req = httpTestingController.expectOne(urls.activities);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
     req.flush(data);
   });
 });

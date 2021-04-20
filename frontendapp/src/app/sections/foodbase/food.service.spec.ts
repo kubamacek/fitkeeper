@@ -27,15 +27,15 @@ describe('FoodService', () => {
 
   it('should get food', () => {
     const data = [
-      {"id": 1, "name": "banana", "energy": 120, "fat": 3.00, "protein": 4.00, "carbohydrate": 6.00}
+      {id: 1, name: 'banana', energy: 120, fat: 3.00, protein: 4.00, carbohydrate: 6.00}
       ,
-      {"id": 2, "name": "apple", "energy": 120, "fat": 3.00, "protein": 4.00, "carbohydrate": 6.00}
-    ]
+      {id: 2, name: 'apple', energy: 120, fat: 3.00, protein: 4.00, carbohydrate: 6.00}
+    ];
     service.getData(urls.foodbase).subscribe((response) => {
       expect(response).toEqual(data);
-    })
+    });
     const req = httpTestingController.expectOne(urls.foodbase);
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
     req.flush(data);
-  })
+  });
 });

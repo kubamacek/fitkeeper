@@ -21,8 +21,8 @@ export class DashboardComponent implements OnInit {
 
   date: string;
   user: string;
-  calories_eaten: number = null;
-  calories_burned: number = null;
+  caloriesEaten: number = null;
+  caloriesBurned: number = null;
   trainings: Array<Training> = [];
   meals: Array<Meal> = [];
   today = new Date();
@@ -46,16 +46,16 @@ export class DashboardComponent implements OnInit {
   getData() {
     this.dailySummaryService.getData(urls.dailysummaries, { day: this.date, user: this.user }).subscribe(response => {
       this.dailysummaries = response;
-      this.calories_burned = this.dailysummaries[0] ? this.dailysummaries[0]['calories_burned'] : 0;
-      this.calories_eaten = this.dailysummaries[0] ? this.dailysummaries[0]['calories_eaten'] : 0;
-      this.trainings = this.dailysummaries[0] ? this.dailysummaries[0]['trainings'] : [];
-      this.meals = this.dailysummaries[0] ? this.dailysummaries[0]['meals'] : [];
-    })
+      this.caloriesBurned = this.dailysummaries[0] ? this.dailysummaries[0].calories_burned : 0;
+      this.caloriesEaten = this.dailysummaries[0] ? this.dailysummaries[0].calories_eaten : 0;
+      this.trainings = this.dailysummaries[0] ? this.dailysummaries[0].trainings : [];
+      this.meals = this.dailysummaries[0] ? this.dailysummaries[0].meals : [];
+    });
   }
 
   dayChanged(event){
     this.date = this.datePipe.transform(event.value, 'yyyy-MM-dd');
-    this.notifyService.notify_user("Day changed to " + this.date);
+    this.notifyService.notify_user('Day changed to ' + this.date);
     this.getData();
   }
 }

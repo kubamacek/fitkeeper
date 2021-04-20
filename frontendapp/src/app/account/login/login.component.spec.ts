@@ -8,14 +8,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from 'src/app/common/services/auth.service';
 import { By } from '@angular/platform-browser';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authSpy = {login: jasmine.createSpy('login')};
+  const authSpy = {login: jasmine.createSpy('login')};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -59,6 +59,6 @@ describe('LoginComponent', () => {
     component.password = 'root';
     component.username = 'root';
     fixture.debugElement.query(By.css('form')).triggerEventHandler('submit', null);
-    expect(authSpy.login).toHaveBeenCalledOnceWith({'username': 'root', 'password': 'root'});
+    expect(authSpy.login).toHaveBeenCalledOnceWith({username: 'root', password: 'root'});
   });
 });

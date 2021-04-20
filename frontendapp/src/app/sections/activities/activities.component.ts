@@ -25,9 +25,9 @@ export class ActivitiesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.activityService.getData(urls.activities).subscribe(response => {
-      this.activities = response
+      this.activities = response;
       this.dataSource.data = this.activities;
-   })
+   });
   }
 
   ngAfterViewInit(){

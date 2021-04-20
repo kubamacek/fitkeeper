@@ -1,7 +1,7 @@
-import { Ingredient } from "./ingredient.interface";
+import { Ingredient } from './ingredient.interface';
 
 export interface MealComponent{
-  id: number,
-  weight: number,
-  ingredient: Ingredient
+  id: number;
+  weight: number;
+  ingredient: Ingredient;
 }

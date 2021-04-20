@@ -13,7 +13,7 @@ export class MealService {
   constructor(private httpClient: HttpClient) {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }
+    };
   }
 
   getData(url: string, filters?: { [name: string]: string }): Observable<Meal[]> {

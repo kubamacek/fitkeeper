@@ -54,8 +54,8 @@ describe('TrainingsComponent', () => {
   });
 
   it('should call get trainings on init', () => {
-    spyOn(component, "getTrainings").and.callThrough();
+    spyOn(component, 'getTrainings').and.callThrough();
     fixture.detectChanges();
     expect(component.getTrainings).toHaveBeenCalledTimes(1);
-  })
+  });
 });

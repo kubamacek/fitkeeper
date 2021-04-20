@@ -53,8 +53,8 @@ describe('DashboardComponent', () => {
   });
 
   it('should call getData on init', () => {
-    spyOn(component, "getData").and.callThrough();
+    spyOn(component, 'getData').and.callThrough();
     fixture.detectChanges();
     expect(component.getData).toHaveBeenCalledTimes(1);
-  })
+  });
 });
