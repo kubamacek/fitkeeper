@@ -2,7 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Ingredient, MealComponent, Meal, Activity, Training, DailySummary
-from .serializers import IngredientSerializer, MealSerializer, MealComponentSerializer, ActivitySerializer, TrainingSerializer, DailySummarySerializer
+from .serializers import (IngredientSerializer, MealSerializer, MealComponentSerializer,
+                          ActivitySerializer, TrainingSerializer, DailySummarySerializer)
 
 
 class IngredientViewSet(viewsets.ModelViewSet):

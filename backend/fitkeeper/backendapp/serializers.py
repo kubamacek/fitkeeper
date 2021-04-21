@@ -5,7 +5,7 @@ from .models import Ingredient, MealComponent, Meal, Activity, Training, DailySu
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = '__all__'    
+        fields = '__all__'
 
 
 class MealComponentSerializer(serializers.ModelSerializer):
@@ -52,7 +52,9 @@ class MealSerializer(serializers.ModelSerializer):
         instance.meal_components.clear()
         for mc in meal_components_data:
             ingredient = Ingredient.objects.get(id=mc.get('ingredient').id)
-            meal_component = MealComponent.objects.get_or_create(ingredient=ingredient, weight=mc.get('weight'))
+            meal_component = MealComponent.objects.get_or_create(
+                ingredient=ingredient,
+                weight=mc.get('weight'))
             instance.meal_components.add(meal_component[0])
         return instance
 

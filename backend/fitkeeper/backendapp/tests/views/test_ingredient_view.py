@@ -90,7 +90,9 @@ class IngredientViewSetTest(APITestCase):
             "carbohydrate": 10.0})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/ingredients/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/ingredients/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         banana = Ingredient.objects.filter(name="Banana").first()
         self.assertEqual(banana.fat, Decimal('0.5'))
@@ -108,7 +110,9 @@ class IngredientViewSetTest(APITestCase):
             "carbohydrate": 10.0})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/ingredients/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/ingredients/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_delete_ingredient(self):

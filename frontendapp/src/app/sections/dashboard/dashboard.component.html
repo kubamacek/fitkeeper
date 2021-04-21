@@ -1,0 +1,39 @@
+<div class="header">
+  <mat-form-field class="date" appearance="fill">
+    <mat-label>Select day</mat-label>
+    <input matInput [matDatepicker]="datepicker" (dateChange)="dayChanged($event)">
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="header">
+  <h1>Daily summary</h1>
+</div>
+<div class="dailysummary">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Trainings">
+      <mat-list *ngFor="let training of trainings" role="list">
+        <mat-list-item role="listitem">
+          <mat-icon>check_circle</mat-icon>     {{ training.activity }}: {{ training.duration }} minutes
+        </mat-list-item>
+      </mat-list>
+      <h4>Calories burned: {{ caloriesBurned }}</h4>
+    </mat-tab>
+    <mat-tab label="Meals">
+      <mat-list *ngFor="let meal of meals" role="list">
+        <mat-list-item role="listitem">
+          <mat-icon>check_circle</mat-icon>     {{ meal.name }}
+        </mat-list-item>
+      </mat-list>
+      <h4>Calories eaten: {{ caloriesEaten }}</h4>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+
+
+
+
+
+

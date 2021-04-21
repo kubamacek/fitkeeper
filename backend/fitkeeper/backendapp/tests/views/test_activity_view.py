@@ -73,7 +73,9 @@ class ActivityViewSetTest(APITestCase):
             "calories_burned": 700})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/activities/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/activities/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         swimming = Activity.objects.filter(name="swimming").first()
         self.assertEqual(swimming.calories_burned, 700)
@@ -85,7 +87,9 @@ class ActivityViewSetTest(APITestCase):
             "name": "Banana"})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/activities/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/activities/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_delete_activity(self):

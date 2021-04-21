@@ -1,9 +1,8 @@
 from rest_framework import status
 from rest_framework.test import force_authenticate, APIClient, APITestCase, APIRequestFactory
 from fitkeeper.backendapp.models import Ingredient, MealComponent, User
-from fitkeeper.backendapp.serializers import MealComponentSerializer, IngredientSerializer
-from fitkeeper.backendapp.views import MealComponentViewSet, IngredientViewSet
-from decimal import Decimal
+from fitkeeper.backendapp.serializers import MealComponentSerializer
+from fitkeeper.backendapp.views import MealComponentViewSet
 
 import json
 
@@ -88,7 +87,9 @@ class MealComponentViewSetTest(APITestCase):
         })
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/mealcomponents/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/mealcomponents/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         mealcomponent = MealComponent.objects.get(pk=pk)
         self.assertEqual(mealcomponent.weight, 3000)
@@ -99,7 +100,9 @@ class MealComponentViewSetTest(APITestCase):
         data = json.dumps({"weight": 3000})
         client = APIClient()
         client.force_authenticate(user=self.user)
-        response = client.put('/api/v1/mealcomponents/{}/'.format(pk), data=data, content_type='application/json')
+        response = client.put('/api/v1/mealcomponents/{}/'.format(pk),
+                              data=data,
+                              content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_delete_mealcomponent(self):

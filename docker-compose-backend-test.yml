@@ -1,0 +1,22 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=fitkeeper
+      - POSTGRES_USER=fitkeeper
+      - POSTGRES_PASSWORD=fitkeeper
+  web:
+    build:
+      context: backend
+      dockerfile: Dockerfile-backend-test
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python backend/manage.py migrate; python backend/manage.py makemigrations; python backend/manage.py test backend/fitkeeper/backendapp/tests -v 2'
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - BACKENDTEST=1
