@@ -1,0 +1,29 @@
+version: 2.1
+jobs:
+  static_backend_code_analysis:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -f backend/Dockerfile-static-backend-analysis backend/
+  backend_postgresql_test:
+    machine: true
+    steps:
+      - checkout
+      - run: docker-compose -f docker-compose-backend-test.yml up --exit-code-from web
+  static_frontend_code_analysis:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -f frontendapp/Dockerfile-static-frontend-analysis frontendapp/
+  frontend_test:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
+workflows:
+  classic:
+    jobs:
+      - static_backend_code_analysis
+      - backend_postgresql_test
+      - static_frontend_code_analysis
+      - frontend_test
