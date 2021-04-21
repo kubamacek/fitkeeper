@@ -11,3 +11,5 @@ jobs:
       script: docker-compose -f docker-compose-backend-test.yml up --exit-code-from web
     - stage: Static frontend code analysis
       script: docker build -f frontendapp/Dockerfile-static-frontend-analysis frontendapp/
+    - stage: Frontend test
+      script: docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
