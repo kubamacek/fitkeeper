@@ -173,3 +173,6 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(seconds=5),
 }
+
+# Django 3.2 migration
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
