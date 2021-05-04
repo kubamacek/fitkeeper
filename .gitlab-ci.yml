@@ -1,0 +1,29 @@
+stages:
+  - test
+
+services: 
+  - docker:dind
+
+before_script:
+  - docker -v
+
+static_backend_code_analysis:
+  image: docker
+  script:
+    - docker build -f backend/Dockerfile-static-backend-analysis backend/
+
+backend_postgresql_test:
+  image: docker/compose:1.29.1
+  script:
+    - docker-compose version
+    - docker-compose -f docker-compose-backend-test.yml up --exit-code-from web
+
+static_frontend_code_analysis:
+  image: docker
+  script:
+    - docker build -f frontendapp/Dockerfile-static-frontend-analysis frontendapp/
+
+frontend_test:
+  image: docker
+  script:
+    - docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
