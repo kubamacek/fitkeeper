@@ -3,13 +3,39 @@ services:
 
 jobs:
   include:
-    - name: Static backend code analysis
+    - stage: test
+      name: Static backend code analysis
       script: docker build -f backend/Dockerfile-static-backend-analysis backend/
-    - name: Backend + PostgreSQL test
+    - stage: test
+      name: Backend + PostgreSQL test
       env:
         - DOCKER_COMPOSE_VERSION=1.29.1
       script: docker-compose -f docker-compose-backend-test.yml up --exit-code-from web
-    - name: Static frontend code analysis
+    - stage: test
+      name: Static frontend code analysis
       script: docker build -f frontendapp/Dockerfile-static-frontend-analysis frontendapp/
-    - name: Frontend test
+    - stage: test
+      name: Frontend test
       script: docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
+    - stage: deploy
+      if: branch = main
+      name: backend deploy to heroku
+      language: generic
+      deploy:
+        - provider: heroku
+          api_key: $HEROKU_API_KEY
+          app: fitkeeper-backend
+          on: main
+    - stage: deploy
+      if: branch = main
+      name: frontend deploy to netlify
+      language: node_js
+      node_js: 10.19.0
+      script:
+        - npm install netlify-cli -g
+        - cd frontendapp && npm install && ng build --prod && cd -
+      deploy:
+        - provider: script
+          script: netlify deploy --prod
+          skip_cleanup: true
+          on: main
