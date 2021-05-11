@@ -1,29 +1,50 @@
 stages:
   - test
+  - deploy
 
 services: 
   - docker:dind
 
-before_script:
-  - docker -v
-
 static_backend_code_analysis:
+  stage: test
   image: docker
   script:
     - docker build -f backend/Dockerfile-static-backend-analysis backend/
 
 backend_postgresql_test:
+  stage: test
   image: docker/compose:1.29.1
   script:
     - docker-compose version
     - docker-compose -f docker-compose-backend-test.yml up --exit-code-from web
 
 static_frontend_code_analysis:
+  stage: test
   image: docker
   script:
     - docker build -f frontendapp/Dockerfile-static-frontend-analysis frontendapp/
 
 frontend_test:
+  stage: test
   image: docker
   script:
     - docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
+
+deploy_backend_to_heroku:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=fitkeeper-backend --api-key=$HEROKU_API_KEY
+  only:
+    - master
+
+deploy_frontend_to_netlify:
+  stage: deploy
+  image: node:10.19.0
+  script:
+    - npm install netlify-cli
+    - cd frontendapp && npm install && npm run build:prod --prod && cd -
+    - ./node_modules/.bin/netlify deploy --prod
+  only:
+    - master
