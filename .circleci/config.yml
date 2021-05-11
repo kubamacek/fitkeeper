@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  heroku: circleci/heroku@0.0.10
+
 jobs:
   static_backend_code_analysis:
     machine: true
@@ -20,10 +24,44 @@ jobs:
     steps:
       - checkout
       - run: docker build -f frontendapp/Dockerfile-frontend-test frontendapp/
+  deploy_backend_to_heroku:
+    machine: true
+    steps:
+      - checkout
+      - heroku/deploy-via-git:
+          force: true
+  deploy_frontend_to_netlify:
+      docker:
+        - image: node:10.19.0
+      steps:
+        - checkout
+        - run: npm install netlify-cli
+        - run: cd frontendapp && npm install && npm run build:prod && cd -
+        - run: ./node_modules/.bin/netlify deploy --prod
+
 workflows:
-  classic:
+  version: 2
+  test_and_deploy:
     jobs:
       - static_backend_code_analysis
       - backend_postgresql_test
       - static_frontend_code_analysis
       - frontend_test
+      - deploy_backend_to_heroku:
+          requires:
+            - static_backend_code_analysis
+            - backend_postgresql_test
+            - static_frontend_code_analysis
+            - frontend_test
+          filters:
+            branches:
+              only: main
+      - deploy_frontend_to_netlify:
+          requires:
+            - static_backend_code_analysis
+            - backend_postgresql_test
+            - static_frontend_code_analysis
+            - frontend_test
+          filters:
+            branches:
+              only: main
