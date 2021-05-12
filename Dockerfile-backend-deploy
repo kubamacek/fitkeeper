@@ -1,0 +1,6 @@
+FROM ruby:latest
+ARG HEROKU_API_KEY
+WORKDIR /app
+COPY . /app/ 
+RUN gem install dpl
+RUN dpl --provider=heroku --app=fitkeeper-backend --api-key=$HEROKU_API_KEY
