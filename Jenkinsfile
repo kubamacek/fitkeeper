@@ -41,6 +41,7 @@ pipeline {
             }
             steps {
                 sh """
+                echo "data" > .dockerignore
                 docker build -f Dockerfile-backend-deploy --build-arg HEROKU_API_KEY=${HEROKU_API_KEY} .
                 """
             }
