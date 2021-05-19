@@ -1,4 +1,4 @@
-FROM node:10.19.0
+FROM kubamacek/fitkeeper:frontendimage1.0
 RUN apt-get update && apt-get install -y --no-install-recommends chromium
 ENV CHROME_BIN=chromium
 WORKDIR /app
