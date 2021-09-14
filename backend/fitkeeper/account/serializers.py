@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from .models import User, BMR
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,3 +16,18 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class BMRSerializer(serializers.ModelSerializer):
+    """
+    Ref for calories in one gram of fat, protein, carbohydrate:
+    -> https://www.nal.usda.gov/fnic/how-many-calories-are-one-gram-fat-carbohydrate-or-protein
+    """
+    calories = serializers.SerializerMethodField()
+
+    def get_calories(self, obj):
+        return (9*obj.fat + 4*obj.protein + 4*obj.carbohydrate)
+
+    class Meta:
+        model = BMR
+        fields = '__all__'

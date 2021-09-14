@@ -27,11 +27,12 @@ router.register(r'meals', views.MealViewSet)
 router.register(r'activities', views.ActivityViewSet)
 router.register(r'trainings', views.TrainingViewSet)
 router.register(r'dailysummaries', views.DailySummaryViewSet)
+router.register(r'users', accountviews.UserViewSet)
+router.register(r'bmrs', accountviews.BMRViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    path('api/v1/auth-user/', accountviews.UserView.as_view()),
     path('api/v1/api-token-auth/', obtain_jwt_token),
     path('api/v1/api-token-refresh/', refresh_jwt_token)
 ]

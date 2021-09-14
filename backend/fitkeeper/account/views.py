@@ -1,16 +1,19 @@
-from rest_framework import views, response
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from django.contrib.auth.models import User
-from .serializers import UserSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import User, BMR
+from .serializers import UserSerializer, BMRSerializer
 
 
-class UserView(views.APIView):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny, )
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return response.Response(serializer.data)
+
+class BMRViewSet(viewsets.ModelViewSet):
+    queryset = BMR.objects.all()
+    serializer_class = BMRSerializer
+    http_method_names = ['get', 'put']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user']

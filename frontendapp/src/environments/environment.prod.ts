@@ -4,7 +4,7 @@ export const environment = {
 
 const apiversion = 'https://fitkeeper-backend.herokuapp.com/api/v1/';
 export const urls = {
-  user: apiversion + 'auth-user/',
+  user: apiversion + 'users/',
   login: apiversion + 'api-token-auth/',
   refresh: apiversion + 'api-token-refresh/',
   about: apiversion + 'about/',

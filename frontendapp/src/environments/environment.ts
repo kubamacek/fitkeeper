@@ -8,7 +8,7 @@ export const environment = {
 
 const apiversion = 'http://127.0.0.1:8000/api/v1/';
 export const urls = {
-  user: apiversion + 'auth-user/',
+  user: apiversion + 'users/',
   login: apiversion + 'api-token-auth/',
   refresh: apiversion + 'api-token-refresh/',
   about: apiversion + 'about/',
