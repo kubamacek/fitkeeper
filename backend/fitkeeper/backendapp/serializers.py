@@ -94,7 +94,7 @@ class DailySummarySerializer(serializers.ModelSerializer):
     def get_calories_burned(self, obj):
         sum = 0
         for training in obj.trainings.all():
-            sum += (training.duration * training.activity.calories_burned)/60
+            sum += (training.duration * training.activity.calories_burned)
         return int(sum)
 
     class Meta:

@@ -54,10 +54,9 @@ class Meal(models.Model):
 class Activity(models.Model):
     """
     Activity object definition.
-    Value for average burned calories is estimated for 1h of activity.
-    Duration represents activity time in minutes.
+    Value for average burned calories is estimated for 1m of activity.
     """
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=60)
     calories_burned = models.PositiveIntegerField()
 
     def __str__(self):
