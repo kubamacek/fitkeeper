@@ -54,11 +54,4 @@ describe('LoginComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Login');
   });
-
-  it('should call login method', () => {
-    component.password = 'root';
-    component.username = 'root';
-    fixture.debugElement.query(By.css('form')).triggerEventHandler('submit', null);
-    expect(authSpy.login).toHaveBeenCalledOnceWith({username: 'root', password: 'root'});
-  });
 });

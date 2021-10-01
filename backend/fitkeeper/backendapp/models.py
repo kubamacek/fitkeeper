@@ -1,6 +1,7 @@
 from django.db import models
 from fitkeeper.account.models import User
 
+
 class Ingredient(models.Model):
     """
     Food object definition.

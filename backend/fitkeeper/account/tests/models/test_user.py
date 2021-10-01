@@ -7,7 +7,7 @@ class UserTestCase(TestCase):
         self.email = 'john.doe@test.com'
         self.username = 'john'
         self.password = 'testpassword'
-    
+
     def test_user(self):
         user = User.objects.create(email=self.email,
                                    username=self.username,
@@ -21,4 +21,3 @@ class UserTestCase(TestCase):
                                    password=self.password)
         bmr = BMR.objects.get(user=user.pk)
         self.assertEqual(bmr.fat, 100)
-

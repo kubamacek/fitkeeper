@@ -35,10 +35,10 @@ class Command(BaseCommand):
         print("STARTED adding activities to database")
         df = _prepare_sport_data_from_file(os.path.join(BASE_DIR, 'fitkeeper', 'data', 'activities.csv'))
         for index, row in df.iterrows():
-                print("Started inserting {} into databse...".format(row['Activity']))
-                name = row['Activity']
-                calories_burned = _adjust_factor_per_minute(row['155 lb']) # using 70kg people as average
-                Activity.objects.create(name=name, calories_burned=calories_burned)
+            print("Started inserting {} into databse...".format(row['Activity']))
+            name = row['Activity']
+            calories_burned = _adjust_factor_per_minute(row['155 lb'])  # using 70kg people as average
+            Activity.objects.create(name=name, calories_burned=calories_burned)
         print("FINISHED adding activities to database")
 
 
