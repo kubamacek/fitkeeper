@@ -3,6 +3,7 @@ import { urls } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -88,4 +89,7 @@ export class AuthService {
     return this.token ? this.token : '';
   }
 
+  changePassword(id: string, data): Observable<{}> {
+    return this.httpClient.put(urls.user + id, data, this.httpOptions);
+  }
 }

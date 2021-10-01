@@ -17,7 +17,8 @@ export const urls = {
   diet: apiversion + 'meals/',
   trainings: apiversion + 'trainings/',
   settings: apiversion + 'settings/',
-  dailysummaries: apiversion + 'dailysummaries/'
+  dailysummaries: apiversion + 'dailysummaries/',
+  bmrs: apiversion + 'bmrs/'
 };
 
 /*

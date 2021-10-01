@@ -18,7 +18,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion'
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MatCard, MatCardModule } from '@angular/material/card';
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule
   ],
   exports: [
     MatTabsModule,
@@ -63,7 +65,8 @@ import { MatCard, MatCardModule } from '@angular/material/card';
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,
-    MatCardModule
+    MatCardModule,
+    MatExpansionModule
   ],
 })
 export class MaterialModule{}

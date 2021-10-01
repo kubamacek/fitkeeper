@@ -11,6 +11,14 @@
 </div>
 <div class="dailysummary">
   <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Meals">
+      <mat-list *ngFor="let meal of meals" role="list">
+        <mat-list-item role="listitem">
+          <mat-icon>check_circle</mat-icon>     {{ meal.name }}
+        </mat-list-item>
+      </mat-list>
+      <h4>Calories eaten: {{ caloriesEaten }} Calories left today: {{ caloriesToEat - caloriesEaten }} </h4>
+    </mat-tab>
     <mat-tab label="Trainings">
       <mat-list *ngFor="let training of trainings" role="list">
         <mat-list-item role="listitem">
@@ -18,14 +26,6 @@
         </mat-list-item>
       </mat-list>
       <h4>Calories burned: {{ caloriesBurned }}</h4>
-    </mat-tab>
-    <mat-tab label="Meals">
-      <mat-list *ngFor="let meal of meals" role="list">
-        <mat-list-item role="listitem">
-          <mat-icon>check_circle</mat-icon>     {{ meal.name }}
-        </mat-list-item>
-      </mat-list>
-      <h4>Calories eaten: {{ caloriesEaten }}</h4>
     </mat-tab>
   </mat-tab-group>
 </div>

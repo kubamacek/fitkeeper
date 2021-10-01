@@ -1,3 +1,4 @@
+import { BmrService } from './../../account/services/bmr.service';
 import { DailysummaryService } from './dailysummary.service';
 import { NotifyService } from './../../common/services/notify.service';
 import { Component, OnInit } from '@angular/core';
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit {
   user: string;
   caloriesEaten: number = null;
   caloriesBurned: number = null;
+  caloriesToEat: number = null;
   trainings: Array<Training> = [];
   meals: Array<Meal> = [];
   today = new Date();
@@ -32,6 +34,7 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     private notifyService: NotifyService,
     private dailySummaryService: DailysummaryService,
+    private bmrService: BmrService,
     private datePipe: DatePipe) {
     this.date = this.datePipe.transform(this.today, 'yyyy-MM-dd');
     this.user = this.authService.getUserId();
@@ -50,6 +53,9 @@ export class DashboardComponent implements OnInit {
       this.caloriesEaten = this.dailysummaries[0] ? this.dailysummaries[0].calories_eaten : 0;
       this.trainings = this.dailysummaries[0] ? this.dailysummaries[0].trainings : [];
       this.meals = this.dailysummaries[0] ? this.dailysummaries[0].meals : [];
+    });
+    this.bmrService.getBMR(urls.bmrs, {user: this.user}).subscribe(response => {
+      this.caloriesToEat = response[0]['calories'];
     });
   }
 
