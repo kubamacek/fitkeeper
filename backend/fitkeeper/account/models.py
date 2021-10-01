@@ -7,7 +7,7 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        BMR.objects.get_or_create(user=self, defaults={'fat': 100, 'carbohydrates': 100, 'protein': 100})
+        BMR.objects.get_or_create(user=self, defaults={'fat': 100, 'carbohydrate': 100, 'protein': 100})
 
 
 class BMR(models.Model):
